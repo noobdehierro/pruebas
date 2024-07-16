@@ -2,22 +2,39 @@
     <div class="navbar-top-left">
         <div class="brand-logo">
             <a href="{{ route('admin.dashboard.index') }}">
-                <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
+                <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}" />
             </a>
         </div>
     </div>
 
     <div class="navbar-top-right">
-        @if (bouncer()->hasPermission('leads.create')
-            || bouncer()->hasPermission('quotes.create')
-            || bouncer()->hasPermission('mail.create')
-            || bouncer()->hasPermission('contacts.persons.create')
-            || bouncer()->hasPermission('contacts.organizations.create')
-            || bouncer()->hasPermission('products.create')
-            || bouncer()->hasPermission('settings.automation.attributes.create')
-            || bouncer()->hasPermission('settings.user.roles.create')
-            || bouncer()->hasPermission('settings.user.users.create')
-        )
+        <div class="profile-info" style="margin-right: 20px;">
+            {{-- <input type="text" class="form-control " id="status" readonly /> --}}
+            <div class="info">
+                <button type="button" class="btn btn-primary btn-sm" onclick="GetCampaignsRelated()">Get
+                    Campaign</button>
+                <select id="Campaigns" class="form-control">
+                    <option selected>Select Campaign</option>
+                </select>
+            </div>
+        </div>
+        <div class="profile-info" style="margin-right: 20px;">
+            {{-- <input type="text" class="form-control " id="status" readonly /> --}}
+            <div class="info">
+                <span class="howdy">Status:</span>
+                <span class="user"> <input type="text" class="form-control " id="status" readonly />
+                </span>
+            </div>
+        </div>
+        @if (bouncer()->hasPermission('leads.create') ||
+                bouncer()->hasPermission('quotes.create') ||
+                bouncer()->hasPermission('mail.create') ||
+                bouncer()->hasPermission('contacts.persons.create') ||
+                bouncer()->hasPermission('contacts.organizations.create') ||
+                bouncer()->hasPermission('products.create') ||
+                bouncer()->hasPermission('settings.automation.attributes.create') ||
+                bouncer()->hasPermission('settings.user.roles.create') ||
+                bouncer()->hasPermission('settings.user.users.create'))
             <div class="quick-create">
                 <span class="button dropdown-toggle">
                     <i class="icon plus-white-icon"></i>
@@ -125,7 +142,7 @@
             <div class="dropdown-toggle">
                 @if (auth()->guard('user')->user()->image)
                     <div class="avatar">
-                        <img src="{{ auth()->guard('user')->user()->image_url }}"/>
+                        <img src="{{ auth()->guard('user')->user()->image_url }}" />
                     </div>
                 @else
                     <div class="avatar">
@@ -143,11 +160,7 @@
 
             <div class="dropdown-list bottom-right">
                 <span class="app-version">
-                    <img
-                        src="{{ url('cache/logo.png') }}"
-                        width="24"
-                        style="margin-bottom: -5px;"
-                    />
+                    <img src="{{ url('cache/logo.png') }}" width="24" style="margin-bottom: -5px;" />
 
                     <!-- Version -->
                     {{ __('admin::app.layouts.app-version', ['version' => 'v' . config('app.version')]) }}
@@ -156,7 +169,8 @@
                 <div class="dropdown-container">
                     <ul>
                         <li>
-                            <a href="{{ route('admin.user.account.edit') }}">{{ __('admin::app.layouts.my-account') }}</a>
+                            <a
+                                href="{{ route('admin.user.account.edit') }}">{{ __('admin::app.layouts.my-account') }}</a>
                         </li>
 
                         <li>
@@ -166,11 +180,11 @@
                                 @method('DELETE')
                             </form>
 
-                            <a
-                                href="javascript:void(0);"
-                                onclick="event.preventDefault(); document.getElementById('adminLogout').submit();">
+                            <a href="javascript:void(0);"
+                                onclick="event.preventDefault(); logout(); document.getElementById('adminLogout').submit();">
                                 {{ __('admin::app.layouts.sign-out') }}
                             </a>
+
                         </li>
                     </ul>
                 </div>

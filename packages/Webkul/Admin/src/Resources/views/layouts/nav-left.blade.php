@@ -3,22 +3,15 @@
 <div class="navbar-left" v-bind:class="{'open': isMenuOpen}">
     <ul class="menubar">
         @foreach ($menu->items as $menuItem)
-            <li
-                class="menu-item {{ Menu::getActive($menuItem) }}"
-                title="{{ $menuItem['name'] }}"
-                @if (! count($menuItem['children'])
-                    || $menuItem['key'] == 'settings'
-                )
-                    v-tooltip.right="{
+            <li class="menu-item {{ Menu::getActive($menuItem) }}" title="{{ $menuItem['name'] }}"
+                @if (!count($menuItem['children']) || $menuItem['key'] == 'settings') v-tooltip.right="{
                         content: '{{ $menuItem['name'] }}',
                         classes: [isMenuOpen ? 'hide' : 'show']
-                    }"
-                @endif
-            >
+                    }" @endif>
 
                 <a href="{{ $menuItem['url'] }}">
                     <i class="icon sprite {{ $menuItem['icon-class'] }}"></i>
-                    
+
                     <span class="menu-label">{{ $menuItem['name'] }}</span>
                 </a>
 
@@ -27,7 +20,8 @@
                         <ul class="sub-menubar">
                             @foreach ($menuItem['children'] as $subMenuItem)
                                 <li class="sub-menu-item {{ Menu::getActive($subMenuItem) }}">
-                                    <a href="{{ count($subMenuItem['children']) ? current($subMenuItem['children'])['url'] : $subMenuItem['url'] }}">
+                                    <a
+                                        href="{{ count($subMenuItem['children']) ? current($subMenuItem['children'])['url'] : $subMenuItem['url'] }}">
                                         <span class="menu-label">{{ $subMenuItem['name'] }}</span>
                                     </a>
                                 </li>

@@ -39,7 +39,8 @@
             </div>
 
             <div class="page-action">
-                <button class="btn btn-primary btn-md" @click="openModal('updateLeadModal')">{{ __('admin::app.leads.edit') }}</button>
+                <button class="btn btn-primary btn-md"
+                    @click="openModal('updateLeadModal')">{{ __('admin::app.leads.edit') }}</button>
             </div>
         </div>
 
@@ -69,10 +70,11 @@
 
                         <div class="custom-attribute-view">
                             @include('admin::common.custom-attributes.view', [
-                                'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'customAttributes' => app(
+                                    'Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'leads',
                                 ]),
-                                'entity'           => $lead,
+                                'entity' => $lead,
                             ])
 
                             @if ($lead->stage->code == 'lost')
@@ -100,8 +102,11 @@
 
                         <div class="attribute-value-row">
                             <div class="label">Name</div>
+                            <input type="text" id="callKey" class="form-control" placeholder="CallKey:">
+
 
                             <div class="value">
+                                <input type="text" name="clientName"id="clientName" value="{{ $lead->person->name }}">
                                 <a href="{{ route('admin.contacts.persons.edit', $lead->person->id) }}" target="_blank">
                                     {{ $lead->person->name }}
                                 </a>
@@ -112,7 +117,9 @@
                             <div class="label">Email</div>
 
                             <div class="value">
-                                @include ('admin::common.custom-attributes.view.email', ['value' => $lead->person->emails])
+                                @include ('admin::common.custom-attributes.view.email', [
+                                    'value' => $lead->person->emails,
+                                ])
                             </div>
                         </div>
 
@@ -120,7 +127,9 @@
                             <div class="label">Contact Numbers</div>
 
                             <div class="value">
-                                @include ('admin::common.custom-attributes.view.phone', ['value' => $lead->person->contact_numbers])
+                                @include ('admin::common.custom-attributes.view.phone', [
+                                    'value' => $lead->person->contact_numbers,
+                                ])
                             </div>
                         </div>
 
@@ -129,7 +138,8 @@
 
                             <div class="value">
                                 @if ($lead->person->organization)
-                                    <a href="{{ route('admin.contacts.organizations.edit', $lead->person->organization->id) }}" target="_blank">
+                                    <a href="{{ route('admin.contacts.organizations.edit', $lead->person->organization->id) }}"
+                                        target="_blank">
                                         {{ $lead->person->organization->name }}
                                     </a>
                                 @else
@@ -155,7 +165,6 @@
                             <div class="lead-product-list">
 
                                 @foreach ($lead->products as $product)
-
                                     <div class="lead-product">
                                         <div class="top-control-group">
                                             <div class="form-group">
@@ -308,7 +317,7 @@
             inject: ['$validator'],
 
             mounted: function() {
-                if (! Array.isArray(window.serverErrors)) {
+                if (!Array.isArray(window.serverErrors)) {
                     this.$root.openModal('updateLeadModal');
 
                     var self = this;

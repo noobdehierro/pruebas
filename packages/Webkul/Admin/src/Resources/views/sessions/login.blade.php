@@ -19,45 +19,49 @@
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
                         <label for="email">{{ __('admin::app.sessions.login.email') }}</label>
 
-                        <input
-                            type="text"
-                            name="email"
-                            class="control"
-                            id="email"
+                        <input type="text" name="email" class="control" id="email"
                             v-validate.disable="'required|email'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.login.email') }}&quot;"
-                            />
+                            data-vv-as="&quot;{{ __('admin::app.sessions.login.email') }}&quot;" />
 
                         <span class="control-error" v-if="errors.has('email')">
                             @{{ errors.first('email') }}
                         </span>
                     </div>
 
+                    <div class="form-group" :class="[errors.has('username') ? 'has-error' : '']">
+                        <label for="username">User name</label>
+
+                        <input type="text" name="username" class="control" id="username" v-validate.disable="'required'"
+                            data-vv-as="&quot;User name&quot;" />
+
+                        <span class="control-error" v-if="errors.has('username')">
+                            @{{ errors.first('username') }}
+                        </span>
+                    </div>
+
                     <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
                         <label for="password">{{ __('admin::app.sessions.login.password') }}</label>
 
-                        <input
-                            type="password"
-                            name="password"
-                            class="control"
-                            id="password"
+                        <input type="password" name="password" class="control" id="password"
                             v-validate.disable="'required|min:6'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.login.password') }}&quot;"
-                        />
+                            data-vv-as="&quot;{{ __('admin::app.sessions.login.password') }}&quot;" />
 
                         <span class="control-error" v-if="errors.has('password')">
                             @{{ errors.first('password') }}
                         </span>
                     </div>
 
+
+
                     {!! view_render_event('admin.sessions.login.form_controls.after') !!}
 
-                    <a href="{{ route('admin.forgot_password.create') }}">{{ __('admin::app.sessions.login.forgot-password') }}</a>
+                    <a
+                        href="{{ route('admin.forgot_password.create') }}">{{ __('admin::app.sessions.login.forgot-password') }}</a>
 
                     <div class="button-group">
                         {!! view_render_event('admin.sessions.login.form_buttons.before') !!}
 
-                        <button type="submit" class="btn btn-xl btn-primary">
+                        <button type="submit" class="btn btn-xl btn-primary" onclick="login()">
                             {{ __('admin::app.sessions.login.login') }}
                         </button>
 
@@ -72,7 +76,9 @@
 @push('scripts')
     <script>
         $(() => {
-            $('input').keyup(({target}) => {
+            $('input').keyup(({
+                target
+            }) => {
                 if ($(target).parent('.has-error').length) {
                     $(target).parent('.has-error').addClass('hide-error');
                 }

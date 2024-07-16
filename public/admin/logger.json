@@ -1,0 +1,12 @@
+{
+    "_ENABLE_DEFAULT": true,
+    "_ENABLE_AJAX": true,
+    "_SERVER": "http://127.0.0.1",
+    "_DOMAIN": "/LoggerWS/api/Logger",
+    "_SEVERITY": "Info",
+    "_SEVERITY_CONSOLE": "Debug",
+    "_USE_WINDOW_ORIGIN": true,
+    "_FILTER_USER_POST": [],
+    "_FILTER_APP_POST": [],
+    "_NUMBER_ATTEMP_POST": []
+}
